@@ -1,0 +1,24 @@
+{
+  "name": "My Good Looking Company",
+  "memberSince": "2019-11-27",
+  "taxationCountry": "DE",
+  "germanVatNumber": "1233323",
+  "subscriptionFee": 20,
+  "commissionFee": 0.5,
+  "marketplaces": [
+    "DE",
+    "UK",
+    "IT"
+  ],
+  "addressBillingFullName": "Human Human",
+  "addressBillingLine1": "My Good Looking Company",
+  "addressBillingLine2": "Wöhrdstraße 25",
+  "addressBillingPhone": "442",
+  "addressBillingCity": "Tübingen",
+  "addressBillingState": "Baden-Württemberg",
+  "addressBillingZip": "72070",
+  "addressBillingCountry": "DE",
+  "registerNumber": "DE1122111",
+  "legalForm": "ne Firma halt",
+  "personAccountable": "The Boss"
+}
