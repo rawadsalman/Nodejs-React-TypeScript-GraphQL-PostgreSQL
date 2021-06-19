@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { ShowCompanyViewModel } from '../../../generated/api'
 import DeleteButton from './DeleteButton'
 
-import AddCompany2 from './AddCompany2'
+import CreateCompanyView from './CreateCompanyView'
 
 interface ICompanyList {
   companies: ShowCompanyViewModel[],
@@ -48,7 +48,7 @@ return (
        <Button onClick={(event: React.MouseEvent<HTMLInputElement>) => {
         setshowaddform(true)
        }}>Add Company</Button>
-        {showaddform && <AddCompany2 /> }
+        {showaddform && <CreateCompanyView /> }
     </Row>
     <Row>
       <Col xs={24}>
