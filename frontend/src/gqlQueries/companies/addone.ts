@@ -10,6 +10,5 @@ import gql from 'graphql-tag'
       memberSince
 }
 }
-` 
-   
+`    
 export default CREATE_COMPANY;
