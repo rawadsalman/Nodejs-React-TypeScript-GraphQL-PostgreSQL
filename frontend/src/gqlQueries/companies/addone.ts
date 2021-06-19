@@ -1,7 +1,4 @@
 import gql from 'graphql-tag'
-import companyColumns from './company.columns'
-
-
    
  export const CREATE_COMPANY = gql`
   mutation createcompany($input: ShowCompanyViewModel!,$pathBuilder: any) {
