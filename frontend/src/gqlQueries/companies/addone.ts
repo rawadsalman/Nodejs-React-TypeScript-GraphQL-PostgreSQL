@@ -9,7 +9,8 @@ import companyColumns from './company.columns'
        @rest(type: "ShowCompanyViewModel", path: "companies", pathBuilder: $pathBuilder, method: "POST") { 
      
       name,
-      addressBillingCity
+      addressBillingCity,
+      memberSince
 }
 }
 `    
