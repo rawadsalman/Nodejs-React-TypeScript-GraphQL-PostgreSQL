@@ -45,12 +45,14 @@ export async function addCompanyHandler(req: Request, res: Response, next: NextF
     console.log("req body.....=",req.body);
     const name=req.body.name;
     const addressBillingCity=req.body.addressBillingCity;
+    const memberSince=req.body.memberSince;
     console.log("name.....=",name);
     console.log("addressBillingCity.....=",addressBillingCity);
+    console.log("memberSince.....=",memberSince);
 
     
     const companyRepository = new CompanyRepository()
-    const company = await companyRepository.addCompany(name,addressBillingCity)
+    const company = await companyRepository.addCompany(name, addressBillingCity, memberSince)
      if(company)
       console.log("added succefuly")
   }catch (err) {

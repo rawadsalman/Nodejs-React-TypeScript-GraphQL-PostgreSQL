@@ -23,12 +23,12 @@ export default class CompanyRepository extends AbstractRepository {
    /* public getCompany(): Promise< []> {
     return this.knex(CompanyRepository.tableName).where('id', uuid).select('id','uuid','name')
   }  */ 
-  public addCompany(name:string,addressBillingCity:string): Promise< [ICompanyModel]> {
+  public addCompany(name:string,addressBillingCity:string, memberSince:string): Promise< [ICompanyModel]> {
     return this.knex.insert({
     uuid:this.CreateUUID(),
-    memberSince: '2021-04-23',
     name:name,
     addressBillingCity:addressBillingCity,
+    memberSince: memberSince,
     taxationCountry: 'DE',
     germanVatNumber: '1233323',
     subscriptionFee: 129,
