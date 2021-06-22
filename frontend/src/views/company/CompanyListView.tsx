@@ -1,8 +1,7 @@
-import { PlusOutlined } from '@ant-design/icons'
 import { useQuery } from '@apollo/client'
-import { Button, Empty, Result, Row } from 'antd'
+import { Empty, Result, Row } from 'antd'
 import React from 'react'
-import { Link, RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps } from 'react-router-dom'
 import LoadingSpinner from '../../components/Basic/LoadingSpinner'
 import { ScrollWrapper } from '../../components/Layout/ContentWrapper'
 import CustomPageHeader from '../../components/Layout/CustomPageHeader'
@@ -14,6 +13,7 @@ import CompanyList from './components/CompanyList'
 const CompanyListView: React.FC<RouteComponentProps> = ({ match }) => {
   const { loading, error, data} = useQuery<{ companies: ShowCompanyViewModel[] }>(GET_ALL_COMPANIES)
   const companies = data?.companies
+
   if (loading) {
     return <LoadingSpinner data-testid="spinner" />
   }
@@ -35,14 +35,11 @@ const CompanyListView: React.FC<RouteComponentProps> = ({ match }) => {
       </>
     )
   }
-  
   return (
     <ScrollWrapper>
       <CustomPageHeader title={'Companies'} />
       <StyledContent>
         <CompanyList companies={companies} />
-        {/* <CompanyDetailList companies={companies} /> */}
-
       </StyledContent>
     </ScrollWrapper>
   )
