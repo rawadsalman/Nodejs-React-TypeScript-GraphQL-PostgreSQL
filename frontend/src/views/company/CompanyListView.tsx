@@ -35,6 +35,7 @@ const CompanyListView: React.FC<RouteComponentProps> = ({ match }) => {
       </>
     )
   }
+  
   return (
     <ScrollWrapper>
       <CustomPageHeader title={'Companies'} />
