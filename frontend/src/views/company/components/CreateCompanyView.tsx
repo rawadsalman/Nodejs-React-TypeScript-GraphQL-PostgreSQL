@@ -1,9 +1,8 @@
 import React,{useState}from 'react';
-import { CREATE_COMPANY } from '../../../gqlQueries/companies/addone';
+import { CREATE_COMPANY } from '../../../gqlQueries/companies/addOne';
 import { GET_ALL_COMPANIES } from '../../../gqlQueries/companies/getAll';
 import { useMutation } from '@apollo/client';
-import {  Form, Input, InputNumber, Button,DatePicker } from 'antd';
-import moment from 'moment';
+import {  Form, Input, Row, Col, Button,DatePicker } from 'antd';
 
 const layout = {
   labelCol: {
@@ -13,67 +12,58 @@ const layout = {
     span: 16,
   },
 };
-/* eslint-disable no-template-curly-in-string */
 
 const validateMessages = {
   required: '${label} is required!'
-
-  //, AddressBillingCity:'${label} is required!'}
-  /* ,
-            '${label} is required!',
-  },
-   types: {
-    email: '${label} is not a valid email!',
-    number: '${label} is not a valid number!',
-  },
-  number: {
-    range: '${label} must be between ${min} and ${max}',
-  },  */
 };
-/* eslint-enable no-template-curly-in-string */
 
 const CreateCompanyView: React.FC=() =>{
 
-    const [showSuccess, setshowSuccess] = useState(false);
+    const [showForm, setShowForm]=useState(true)
     const [name, setName] = React.useState("");
     const [addressBillingCity, setAddressBillingCity] = React.useState("");
-    //const [memberSince,setMemberSince] = React.useState(new Date());
     const [memberSince,setMemberSince] = React.useState("");
-
-
+    
     const [createcompany, { data, loading, error }] = useMutation(CREATE_COMPANY, {
       refetchQueries: [{ query: GET_ALL_COMPANIES }],
     });
-    const handleSubmit=()=>{
+    const handleSubmit=(name:string, addressBillingCity:string, memberSince:string)=>{
         try{
-        console.log("member since",memberSince);
-
-        createcompany({ variables: { input:{name, addressBillingCity, memberSince } }});
-        setshowSuccess(true);
+            if(name!='' && addressBillingCity!='' && memberSince!=''){
+            createcompany({ variables: { input:{name, addressBillingCity, memberSince } }});
+            setShowForm(false);
+            alert("a new company was added successfully")
+            window.location.reload(true);
+          } 
         }
         catch(error)
         {
-          console.log("error when adding new company")
-          console.error();
+            console.log("error when adding new company");
+            console.error();
         }
-        //window.location.reload(true);
-    }   
-    /* const onChangeDatePicker=(val )=>{
-        console.log('kkkk',val);
-    }   */
-    /* const handleDateChange = (dateObj: moment.Moment, dateStr: string): void => {
-      setMemberSince(dateObj);
     }
- */
+    
     return (
-      <>
     <div>
-    { showSuccess
-                    ? <div> a new company was added successfully</div>
-                    : null
-    }    
-    </div>
-    <Form {...layout} >
+    {showForm &&
+    <Form 
+     labelCol={{
+      span: 4,
+    }}
+    wrapperCol={{
+      span: 14,
+    }}
+    layout="horizontal"
+    initialValues={{
+      size: 'default',
+    }} 
+    validateMessages={validateMessages}
+    style={{ borderStyle:'solid', borderWidth:'thin', borderColor :'green' }}
+     >
+       <Row justify="center">
+          <span style={{color:'green'}}>New Company</span>
+      </Row>
+      <Form.Item/>
       <Form.Item
         name='Company Name'
         label="Company Name"
@@ -87,6 +77,7 @@ const CreateCompanyView: React.FC=() =>{
             type="text"
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter company name"
+            style={{ width: '50%' }}
         />
       </Form.Item>
       <Form.Item 
@@ -97,12 +88,12 @@ const CreateCompanyView: React.FC=() =>{
                   required: true,
                 },
               ]}
-            >
-           
+            >  
         <Input
             type="text"
             onChange={(e) => setAddressBillingCity(e.target.value)}
             placeholder="Enter Address Billing City"
+            style={{ width: '50%' }}
         />
       </Form.Item>
       <Form.Item 
@@ -112,23 +103,26 @@ const CreateCompanyView: React.FC=() =>{
                 {
                   required: true,
                 },
-              ]}
-             
+              ]} 
             >
-       {/* <DatePicker  style={{width:'100%'}} onChange={(date)=>date && setMemberSince(date?.toDate())}/> */}
-
-       <DatePicker  style={{width:'100%'}} onChange={(date)=>date && setMemberSince(date.toString())}/>
+        <DatePicker  style={{width:'30%'}} onChange={(date)=>date && setMemberSince(date.toString())}/>
       </Form.Item> 
 
-      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 7 }}>
+        
         <Button type="primary" htmlType="submit" onClick={() => {
-                  handleSubmit();
+                  handleSubmit(name, addressBillingCity, memberSince);
                 }}>
           Save
         </Button>
+        <Button style={{margin: '15px'}} type="primary" onClick={(event: React.MouseEvent<HTMLInputElement>) => {
+            window.location.reload(true);
+          }}>Cancel
+       </Button>
       </Form.Item>
     </Form>
-    </>
+    }
+    </div>
   );
 };
 

@@ -1,4 +1,6 @@
 import { useHistory } from "react-router-dom";
+import { Button} from 'antd'
+
 
 function HomeButton() {
   let history = useHistory();
@@ -8,9 +10,9 @@ function HomeButton() {
   }
 
   return (
-    <button type="button" onClick={handleClick}>
-      Go home
-    </button>
+    <Button  onClick={handleClick}>
+      Back To Homepage
+    </Button>
   );
 }
 
