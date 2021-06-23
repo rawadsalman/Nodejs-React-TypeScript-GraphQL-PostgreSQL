@@ -1,15 +1,13 @@
-import { title } from 'node:process'
 import React from 'react'
 import { ScrollWrapper } from '../../components/Layout/ContentWrapper'
 import CustomPageHeader from '../../components/Layout/CustomPageHeader'
 import { StyledContent } from '../styles'
-import CompanyDetailList from './components/CompanyList'
 import { ShowCompanyViewModel } from '../../generated/api'
 import { RouteComponentProps, useParams } from 'react-router-dom';
-import { GET_COMPANY_DETAILS } from '../../gqlQueries/companies/getone'
+import { GET_COMPANY_DETAILS } from '../../gqlQueries/companies/getOne'
 import { useQuery } from '@apollo/client'
 import LoadingSpinner from '../../components/Basic/LoadingSpinner'
-import { Button, Empty, Result, Row ,Descriptions} from 'antd'
+import {Result, Row ,Descriptions} from 'antd'
 import HomeButton from './components/HomeButton'
 
 
@@ -19,11 +17,11 @@ interface ICompanyReadView extends RouteComponentProps {
 const CompanyReadView: React.FC<ICompanyReadView> = ( props ) => {
    
   const uuid=(props as any).match.params.id;
-  const { loading, error, data} = useQuery<{ companydetails: ShowCompanyViewModel }>(GET_COMPANY_DETAILS,{ variables: {uuid} })
-  const companydetails = data?.companydetails
+  const { loading, error, data} = useQuery(GET_COMPANY_DETAILS,{ variables: {uuid} })
 
-
-  if (loading) {
+  const companydetails = data?.company[0]
+   if (loading) {
+    console.log("loading")
     return <LoadingSpinner data-testid="spinner" />
   }
 
@@ -35,40 +33,28 @@ const CompanyReadView: React.FC<ICompanyReadView> = ( props ) => {
     )
   } 
 
-  if (companydetails) {
-    return (
-      <>
-         <div >
-          <Descriptions title="Company Details" bordered>
-          
+  return (
+    <ScrollWrapper>
+      <CustomPageHeader title={`Company Details`} />
+      <StyledContent>
+        <Row>
+          <Descriptions bordered>
+
             <Descriptions.Item label="Company Name">{companydetails.name}</Descriptions.Item>
-            {/* <Descriptions.Item label="Id">{companydetails.id}</Descriptions.Item> */}
             <Descriptions.Item label="Uuid">{companydetails.uuid}</Descriptions.Item>
             <Descriptions.Item label="Member Since">{companydetails.memberSince}</Descriptions.Item>
             <Descriptions.Item label="Address Billing City">{companydetails.addressBillingCity}</Descriptions.Item>
             <Descriptions.Item label="Address Billing Phone">{companydetails.addressBillingPhone}</Descriptions.Item>
 
           </Descriptions>
-          
-          <HomeButton />
-
-        </div>
-
-      </>
-    )
-  }
-  return (
-    <ScrollWrapper>
-      <CustomPageHeader title={`Company`} />
-      <StyledContent>
-        <>Please add me</>
-        <>Company Detail List
-        {/* <h2>{props.match.params}</h2> */}
-         {/* {console.log ("params...",props.match.params)}  */}
-         {/* {console.log ("company...",company)}  */}
-        {/* <CompanyDetailList companies={companies}/>  */}
-        </>
-        <HomeButton />
+        </Row>
+        <br/>
+        <br/>
+        <Row justify="center">
+           <HomeButton />
+        </Row>
+        
+        
       </StyledContent>
     </ScrollWrapper>
   )

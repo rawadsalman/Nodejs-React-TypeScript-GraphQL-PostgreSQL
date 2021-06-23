@@ -13,7 +13,6 @@ import CompanyList from './components/CompanyList'
 const CompanyListView: React.FC<RouteComponentProps> = ({ match }) => {
   const { loading, error, data} = useQuery<{ companies: ShowCompanyViewModel[] }>(GET_ALL_COMPANIES)
   const companies = data?.companies
-
   if (loading) {
     return <LoadingSpinner data-testid="spinner" />
   }
