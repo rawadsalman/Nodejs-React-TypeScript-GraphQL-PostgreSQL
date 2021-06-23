@@ -1,6 +1,6 @@
 import GET_ALL_COMPANIES from './getAll'
-import GET_COMPANY_DETAILS from './getone'
-import CREATE_COMPANY from './addone'
+import GET_COMPANY_DETAILS from './getOne'
+import CREATE_COMPANY from './addOne'
 import DELETE_COMPANY from './deleteOne'
 
 export {
