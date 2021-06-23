@@ -1,9 +1,7 @@
-import { Button, Col, Input, Row, Table } from 'antd'
-import React, { useState } from 'react'
+import { Button, Col, Row, Table } from 'antd'
+import React  from 'react'
 import { Link } from 'react-router-dom'
 import { ShowCompanyViewModel } from '../../../generated/api'
-import DeleteButton from './DeleteButton'
-
 import CreateCompanyView from './CreateCompanyView'
 
 interface ICompanyList {
@@ -28,28 +26,31 @@ const columns = [
     render: (text: string, record: ShowCompanyViewModel) => ( 
       <span>
         <Link to={`/companies/${record.uuid}`} >Open</Link>
-        {/* <DeleteButton uuid={`${record.uuid}`}/> */}
   </span>
 
     ),
-  },
-  
+  },  
 ]
 
 const CompanyList: React.FC<ICompanyList> = ({ companies }) =>
 {
 
- const [showaddform, setshowaddform] = React.useState(false);
+const [showAddForm, setShowAddForm] = React.useState(false);
+const [showAddButton, setShowAddButton] = React.useState(true);
 
 return (
   
   <div>
     <Row>
-       <Button onClick={(event: React.MouseEvent<HTMLInputElement>) => {
-        setshowaddform(true)
-       }}>Add Company</Button>
-        {showaddform && <CreateCompanyView /> }
+       {showAddButton &&<Button onClick={(event: React.MouseEvent<HTMLInputElement>) => {
+        setShowAddForm(true);
+        setShowAddButton(false);
+       }}>Add New Company
+       </Button> 
+      }
     </Row>
+        {showAddForm && <CreateCompanyView /> }
+    <br/>
     <Row>
       <Col xs={24}>
         <Table bordered dataSource={companies} rowKey={'uuid'} columns={columns} pagination={false} />
